@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pseudoclases de CSS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+  <h1>Pseudoclases de CSS</h1>
+  <p>Ejemplos vivos de cada pseudoclase con su código. Pasa el mouse, haz clic y usa Tab para probarlas.</p>
+  <nav class="nav">
+    <a href="#enlaces">Enlaces</a>
+    <a href="#accion">Acción</a>
+    <a href="#formularios">Formularios</a>
+    <a href="#estructurales">Estructurales</a>
+    <a href="#funcionales">Funcionales</a>
+    <a href="#otros">Otros</a>
+  </nav>
+</header>
+
+<main>
+<!-- ============ ENLACES ============ -->
+<h2 id="enlaces">1. Enlaces y ubicación</h2>
+<div class="demo enlaces">
+  <p>
+    <a href="https://developer.mozilla.org/es/docs/Web/CSS/Pseudo-classes">MDN (:link / :visited)</a> ·
+    <a href="#objetivo-demo">Ir al objetivo (:target)</a>
+  </p>
+<pre><code>a:link    { color: #2a6fdb; }
+a:visited { color: #7b3fb5; }
+a:any-link { text-decoration-thickness: 2px; }</code></pre>
+</div>
+<div class="demo">
+  <p id="objetivo-demo" class="objetivo">Este párrafo se resalta cuando la URL termina en #objetivo-demo (:target).</p>
+<pre><code>.objetivo:target { background: #ffd23f; }</code></pre>
+</div>
+
+<!-- ============ ACCIÓN ============ -->
+<h2 id="accion">2. Acción del usuario</h2>
+<div class="demo">
+  <p>
+    <button class="btn-hover">:hover</button>
+    <button class="btn-active">:active (mantén clic)</button>
+    <button class="btn-fv">:focus-visible (usa Tab)</button>
+  </p>
+  <p><input class="campo-focus" placeholder=":focus (haz clic aquí)"></p>
+  <div class="grupo"><input placeholder=":focus-within"><button>Enviar</button></div>
+<pre><code>.btn-hover:hover   { background: #2a6fdb; color: #fff; }
+.btn-active:active { transform: scale(.94); }
+.campo-focus:focus { outline: 3px solid #2a6fdb; }
+.btn-fv:focus-visible { outline: 3px dashed #d64545; }
+.grupo:focus-within { background: #fff8d6; }</code></pre>
+</div>
+
+<!-- ============ FORMULARIOS ============ -->
+<h2 id="formularios">3. Formularios</h2>
+<div class="demo form-demo">
+  <label>Correo (:required, :valid / :invalid)
+    <input type="email" required placeholder="nombre@correo.com"></label>
+  <label>Apodo (:optional)
+    <input type="text" placeholder="opcional"></label>
+  <label>Edad entre 18 y 99 (:in-range / :out-of-range)
+    <input type="number" min="18" max="99" value="10"></label>
+  <label>Deshabilitado (:disabled)
+    <input value="No me puedes editar" disabled></label>
+  <label>Solo lectura (:read-only)
+    <input value="Solo lectura" readonly></label>
+  <label><input type="checkbox" checked> <span>:checked</span></label>
+  <label><input type="radio" name="r" checked> <span>:default (radio marcado por defecto)</span></label>
+  <label><input type="checkbox" id="ind"> <span>:indeterminate (se activa con JS)</span></label>
+  <script>document.getElementById("ind").indeterminate = true;</script>
+<pre><code>input:required  { border-left: 6px solid #2a6fdb; }
+input:valid:not(:placeholder-shown)   { border-color: #1f9d55; }
+input:invalid:not(:placeholder-shown) { border-color: #d64545; }
+input:disabled  { background: #e6eaef; }
+input:in-range  { background: #e8f7ee; }
+input:out-of-range { background: #fde8e8; }
+input:checked + span { font-weight: 700; }</code></pre>
+</div>
+
+<!-- ============ ESTRUCTURALES ============ -->
+<h2 id="estructurales">4. Estructurales</h2>
+<div class="demo">
+  <ul class="lista">
+    <li>Uno (:first-child)</li><li>Dos (even)</li><li>Tres (3n)</li>
+    <li>Cuatro (even)</li><li>Cinco (:nth-last-child(2))</li><li>Seis (:last-child)</li>
+  </ul>
+<pre><code>li:first-child { color: #2a6fdb; }
+li:last-child  { color: #d64545; }
+li:nth-child(even) { background: #eef3fb; }
+li:nth-child(3n)   { border-left: 5px solid #ffd23f; }
+li:nth-last-child(2) { text-decoration: underline; }</code></pre>
+</div>
+<div class="demo tipos">
+  <p>Primer párrafo (:first-of-type)</p>
+  <span>span 1</span> <span>span 2 (:nth-of-type(2))</span> <span>span 3</span>
+  <p>Último párrafo (:last-of-type)</p>
+</div>
+<div class="demo unico"><p>Soy hijo único (:only-child)</p></div>
+<div class="demo"><div class="vacio"></div>
+<pre><code>.vacio:empty { border: 2px dashed #d64545; }</code></pre></div>
+
+<!-- ============ FUNCIONALES ============ -->
+<h2 id="funcionales">5. Funcionales y de idioma</h2>
+<div class="demo func">
+  <h4>Título h4 (:is)</h4><h5>Título h5 (:is)</h5>
+  <p class="suave">Texto con :where (especificidad cero)</p>
+  <div class="caja activa">Caja .activa (:not)</div>
+  <div class="caja">Caja sin .activa (:not)</div>
+  <div class="caja"><label><input type="checkbox"> Marca para activar el padre (:has)</label></div>
+  <p class="idioma" lang="es">Hola</p>
+  <p class="idioma" lang="en">Hello</p>
+<pre><code>:is(h4, h5):hover { color: #2a6fdb; }
+.caja:not(.activa) { opacity: .5; }
+.caja:has(input:checked) { border-color: #1f9d55; }
+.idioma:lang(en)::after { content: " (inglés)"; }</code></pre>
+</div>
+
+<!-- ============ OTROS ============ -->
+<h2 id="otros">6. Otros estados</h2>
+<div class="demo">
+  <details><summary>Abre y cierra (:open)</summary><p>Contenido del details.</p></details>
+  <p><button onclick="document.getElementById('dlg').showModal()">Abrir diálogo (:modal)</button></p>
+  <dialog id="dlg"><p>Soy un diálogo modal.</p><button onclick="this.closest('dialog').close()">Cerrar</button></dialog>
+<pre><code>details:open summary { color: #2a6fdb; }
+dialog:modal::backdrop { background: rgba(20,33,61,.6); }
+:root:has(dialog:modal) { overflow: hidden; }</code></pre>
+</div>
+
+<!-- ============ REFERENCIA ============ -->
+<h2>Referencia completa</h2>
+<p>Consulta el <code>README.md</code> para la tabla con todas las pseudoclases, su uso y su soporte.</p>
+</main>
+<footer><small>Repositorio educativo: pseudoclases de CSS.</small></footer>
+</body>
+</html>
